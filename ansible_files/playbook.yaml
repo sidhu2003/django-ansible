@@ -1,0 +1,24 @@
+- name: Web Server Setup
+  hosts: appservers
+  become: yes
+  vars:
+
+  tasks:
+
+    - name: Install pip
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+
+    - name: clone the repo
+      git:
+        repo: 'https://github.com/sidhu2003/django-ansible.git'
+        dest: ./code
+        clone: yes
+        update: no
+
+    - name: install pip requirements
+      pip:
+        requirements: ~/code/requirements.txt
+
